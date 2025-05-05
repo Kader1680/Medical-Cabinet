@@ -7,7 +7,8 @@ const Sidebar: React.FC = () => {
     <div
       className="d-flex flex-column align-items-center text-center py-4"
       style={{
-        backgroundColor: '#A8E6E6',
+        backgroundColor: '#2a5c8a',
+        
         width: '100px',
         minHeight: '100vh',
         borderTopLeftRadius: '40px',
@@ -23,17 +24,17 @@ const Sidebar: React.FC = () => {
         alt="Doctor"
         style={{ width: '60px', height: '60px' }}
       />
-      <small className="fw-bold text-dark mb-4">Dr. Amina HAMIDA</small>
+      <small className="fw-bold text-white mb-4">Dr. Amina HAMIDA</small>
 
       {/* Icons */}
       <div className="my-3">
-        <img src="/folders_2120926 1.png" alt="folder" width={32} />
+        <img className=' f bg-white p-1 ' src="/folders_2120926 1.png" alt="folder" width={32} />
       </div>
       <div className="my-3">
-        <img src="/bookkeeping_12871302 1.png" alt="user" width={32} />
+        <img className=' bg-white p-1 ' src="/bookkeeping_12871302 1.png" alt="user" width={32} />
       </div>
       <div className="mt-auto mb-3">
-        <img src="/log-out_10024613-removebg-preview 1.png" alt="logout" width={32} />
+        <img  className=' bg-white p-1 ' src="/log-out_10024613-removebg-preview 1.png" alt="logout" width={32} />
       </div>
     </div>
   );
