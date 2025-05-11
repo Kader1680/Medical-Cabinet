@@ -27,9 +27,8 @@ const ConsultationForm: React.FC = () => {
         <div className="col-md-6">
           <input type="text" placeholder="Adresse" className="form-control" />
         </div>
-        <div className="col-md-6">
-          <input type="text" placeholder="Diagnostique Et Remarque" className="form-control" />
-        </div>
+        <textarea className="form-control mb-2" rows={5} placeholder="Diagnostique Et Remarque"></textarea>
+        
         <div className="col-md-12">
           <input type="date" placeholder="Date" className="form-control" />
         </div>
