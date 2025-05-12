@@ -49,7 +49,7 @@ const AllPatients: React.FC = () => {
             <th>Nom</th>
             <th>Date de Consultation</th>
             <th>Diagnostique</th>
-            <th></th>
+            <th className=' '>actions</th>
           </tr>
         </thead>
         <tbody>
@@ -59,15 +59,20 @@ const AllPatients: React.FC = () => {
               <td>{patient.date}</td>
               <td>{patient.diag}</td>
               <td>
-                <button className="btn btn-primary btn-sm">Voir Dossier</button>
+                <button className="btn btn-primary btn-sm ">Voir Dossier</button>
+                <button className="btn btn-warning btn-sm ms-2">update</button>
+                <button className="btn btn-danger btn-sm ms-2">delete</button>
               </td>
+ 
             </tr>
           ))}
         </tbody>
       </table>
+       
       <div className="text-center mt-4">
         <span className="text-muted" style={{ cursor: 'pointer' }}>Voir plus</span>
       </div>
+
     </div>
   );
 };

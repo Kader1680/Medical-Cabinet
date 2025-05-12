@@ -80,20 +80,11 @@ const AllConsultations: React.FC = () => {
                 <td>{row.name}</td>
                 <td>{row.date}</td>
                 <td>{row.diag}</td>
-                <td>
-                  <button
-                    className="btn btn-sm btn-info me-2"
-                    onClick={() => openEditModal(index)}
-                  >
-                    Modifier
-                  </button>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(index)}
-                  >
-                    Supprimer
-                  </button>
-                </td>
+                 <td>
+                    <button className="btn btn-primary btn-sm ">Voir Dossier</button>
+                    <button className="btn btn-warning btn-sm ms-2">update</button>
+                    <button className="btn btn-danger btn-sm ms-2">delete</button>
+                 </td>
               </tr>
             ))}
           </tbody>
