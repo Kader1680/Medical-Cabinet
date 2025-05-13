@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 type Gender = 'Féminin' | 'Masculin' | '';
 type Role = 'Médecin' | 'Secrétaire' | '';
+type MedecinType = 'Généraliste' | 'Spécialiste' | '';
 
 interface FormData {
   lastName: string;
@@ -32,6 +33,7 @@ export const SignUpDoctor = () => {
     confirmPassword: '',
   });
 
+  const [medecinType, setMedecinType] = useState<MedecinType>('');
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -40,13 +42,27 @@ export const SignUpDoctor = () => {
       ...formData,
       [name]: value,
     });
+
+    // Reset specialty and medecin type when role is changed
+    if (name === 'role' && value !== 'Médecin') {
+      setMedecinType('');
+      setFormData(prev => ({ ...prev, specialty: '' }));
+    }
+  };
+
+  const handleMedecinTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value as MedecinType;
+    setMedecinType(value);
+    if (value !== 'Spécialiste') {
+      setFormData(prev => ({ ...prev, specialty: '' }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-      console.log('Form submitted:', formData);
+      console.log('Form submitted:', { ...formData, medecinType });
       alert('Registration successful!');
     } else {
       setErrors(validationErrors);
@@ -61,20 +77,27 @@ export const SignUpDoctor = () => {
     if (!formData.birthDate) newErrors.birthDate = 'Birth date is required';
     // if (!formData.gender) newErrors.gender = 'Gender is required';
     // if (!formData.role) newErrors.role = 'Role is required';
-    if (formData.role === 'Médecin' && !formData.specialty) newErrors.specialty = 'Specialty is required for doctors';
+
+    if (formData.role === 'Médecin' && medecinType === 'Spécialiste' && !formData.specialty) {
+      newErrors.specialty = 'Specialty is required for specialists';
+    }
+
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
+
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
     }
+
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
     }
+
     return newErrors;
   };
 
@@ -220,6 +243,38 @@ export const SignUpDoctor = () => {
                 </div>
 
                 {formData.role === 'Médecin' && (
+                  <div className="mb-3">
+                    <label className="form-label">Type de Médecin</label>
+                    <div>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="medecinType"
+                          id="generaliste"
+                          value="Généraliste"
+                          checked={medecinType === 'Généraliste'}
+                          onChange={handleMedecinTypeChange}
+                        />
+                        <label className="form-check-label" htmlFor="generaliste">Généraliste</label>
+                      </div>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="medecinType"
+                          id="specialiste"
+                          value="Spécialiste"
+                          checked={medecinType === 'Spécialiste'}
+                          onChange={handleMedecinTypeChange}
+                        />
+                        <label className="form-check-label" htmlFor="specialiste">Spécialiste</label>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {formData.role === 'Médecin' && medecinType === 'Spécialiste' && (
                   <div className="mb-3">
                     <label className="form-label">Spécialité</label>
                     <input

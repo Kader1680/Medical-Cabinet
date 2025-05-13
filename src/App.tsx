@@ -9,10 +9,8 @@ import AddPatientForm from './pages/AddPatientForm ';
 import NewAppointmentForm from './pages/NewAppointmentForm';
 import { SignUpDoctor } from './pages/SignUpDoctor';
 import { LoginDoctor } from './pages/login';
-import { SignUpDoctorSpecialty } from './pages/SignUpDoctorSpecialty';
 import AllPatients from './pages/AllPatients';
 import AllConsultations from './pages/AllConsultations';
-import { SignUpSecretary } from './pages/SignUpSecretary';
 import ChooseRole from './pages/ChooseRole';
 const App: React.FC = () => {
   return (
@@ -26,9 +24,7 @@ const App: React.FC = () => {
       
         <Route path="/signUpdoctor" element={<SignUpDoctor />} />
         <Route path="/login" element={<LoginDoctor />} />
-        <Route path="/SignUpDoctorSpecialty" element={<SignUpDoctorSpecialty />} />
-        <Route path="/SignUsecrutary" element={<SignUpSecretary />} />
-         
+    
 
         <Route path="/consultationform" element={<ConsultationForm />} />
         <Route path="/add-secretary" element={<AddSecretaryForm />} />

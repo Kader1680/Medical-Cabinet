@@ -39,7 +39,30 @@ const ConsultationForm: React.FC = () => {
         <div className="col-md-12"><input type="date" placeholder="Date" className="form-control" /></div>
       </div>
 
+      {/* Dossier Médical */}
+      <div className="border rounded p-3 mb-4">
+        <h5 className="text-center mb-3 text-success">Dossier Médical</h5>
+        <div className="mb-3">
+          <label className="form-label">Antécédents Médicaux</label>
+          <textarea className="form-control" rows={2} placeholder="Ex : Diabète, Hypertension..." />
+        </div>
+         
+        <div className="mb-3">
+          <label className="form-label">Traitements en Cours</label>
+          <textarea className="form-control" rows={2} placeholder="Ex : Metformine, Bêtabloquants..." />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Antécédents Familiaux</label>
+          <textarea className="form-control" rows={2} placeholder="Ex : Antécédents de cancer, diabète..." />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Examens Précédents</label>
+          <textarea className="form-control" rows={2} placeholder="Ex : ECG, IRM, Radio..." />
+        </div>
+      </div>
+
       <div className="row">
+        {/* Ordonnance */}
         <div className="col-md-6">
           <div className="border rounded p-3 mb-4">
             <h5 className="text-center mb-3">Ordonnance</h5>
@@ -84,7 +107,7 @@ const ConsultationForm: React.FC = () => {
                 </div>
               </div>
             ))}
-            <button type="button" className="btn btn-primary w-100 mb-3" onClick={() => handleAddRow('ordonnance')}>+ Ajouter Médicament</button>
+            <button type="button" className="btn btn-secondary w-100 mb-3" onClick={() => handleAddRow('ordonnance')}>+ Ajouter Médicament</button>
 
             <div className="text-end">
               <input type="text" placeholder="Dr." className="form-control w-50 ms-auto" />
@@ -92,6 +115,7 @@ const ConsultationForm: React.FC = () => {
           </div>
         </div>
 
+        {/* Certificat Médical */}
         <div className="col-md-6">
           <div className="border rounded p-3 mb-4">
             <h5 className="text-center mb-3">Certificat Médical</h5>
@@ -136,7 +160,7 @@ const ConsultationForm: React.FC = () => {
                 </div>
               </div>
             ))}
-            <button type="button" className="btn btn-primary w-100 mb-3" onClick={() => handleAddRow('certificat')}>+ Ajouter Médicament</button>
+            <button type="button" className="btn btn-secondary w-100 mb-3" onClick={() => handleAddRow('certificat')}>+ Ajouter Médicament</button>
 
             <div className="text-end">
               <input type="text" placeholder="Dr." className="form-control w-50 ms-auto" />
@@ -147,11 +171,11 @@ const ConsultationForm: React.FC = () => {
 
       <div className="text-center mt-4 d-flex justify-content-evenly gap-3">
         <button className="btn btn-light border">
-          <img src="/printer.png" className="rounded-circle mb-2" alt="Doctor" style={{ width: '60px', height: '60px' }} />
+          <img src="/printer.png" className="rounded-circle mb-2" alt="Printer" style={{ width: '60px', height: '60px' }} />
         </button>
         <button className="btn btn-primary px-4">Enregistrer</button>
         <button className="btn btn-light border">
-          <img src="/printer.png" className="rounded-circle mb-2" alt="Doctor" style={{ width: '60px', height: '60px' }} />
+          <img src="/printer.png" className="rounded-circle mb-2" alt="Printer" style={{ width: '60px', height: '60px' }} />
         </button>
       </div>
     </div>
