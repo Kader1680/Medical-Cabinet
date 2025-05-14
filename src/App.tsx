@@ -14,6 +14,7 @@ import AllConsultations from './pages/AllConsultations';
 import ChooseRole from './pages/ChooseRole';
 import DashboardDoctor from './pages/DashboardDoctor';
 import DashboardSecretaire from './pages/DashboardSecretaire';
+import EditMedecin from './pages/EditMedecin';
 const App: React.FC = () => {
   return (
    <div className=' container'>
@@ -36,11 +37,16 @@ const App: React.FC = () => {
 
         <Route path="/allpatients" element={<AllPatients />} />
         <Route path="/allconsulations" element={<AllConsultations />} />
-        <Route path="/" element={<ChooseRole />} />
+        <Route path="/" element={<SignUpDoctor />} />
 
 
         <Route path="/dashboard" element={<DashboardDoctor />} />
         <Route path="/dash" element={<DashboardSecretaire />} />
+
+
+
+        <Route path="/edit-information" element={<EditMedecin />} />
+        
 
       </Routes>
     </Router>
