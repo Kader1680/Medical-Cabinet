@@ -11,7 +11,6 @@ import { SignUpDoctor } from './pages/SignUpDoctor';
 import { LoginDoctor } from './pages/login';
 import AllPatients from './pages/AllPatients';
 import AllConsultations from './pages/AllConsultations';
-import ChooseRole from './pages/ChooseRole';
 import DashboardDoctor from './pages/DashboardDoctor';
 import DashboardSecretaire from './pages/DashboardSecretaire';
 import EditMedecin from './pages/EditMedecin';
