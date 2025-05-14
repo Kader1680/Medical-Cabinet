@@ -2,9 +2,10 @@
 import React from 'react';
 
 
-const Sidebar: React.FC = () => {
+const SidebarScritaire: React.FC = () => {
   return (
     <div
+    
       className="d-flex flex-column align-items-center text-center py-4"
       style={{
         backgroundColor: '#ade9e4',
@@ -14,7 +15,7 @@ const Sidebar: React.FC = () => {
         borderTopLeftRadius: '40px',
         borderBottomLeftRadius: '40px',
         position: 'fixed',
-        left: 0,
+        left: 120,
         top: 0,
       }}
     >
@@ -34,24 +35,12 @@ const Sidebar: React.FC = () => {
       <div className="my-3">
         <img className=' f bg-white p-1 ' src="/folders_2120926 1.png" alt="folder" width={32} />
       </div>
-      <div className="my-3">
-       
-        <a href="/manage-secritaire">
-         <img className=' bg-white p-1 ' src="/bookkeeping_12871302 1.png" alt="user" width={32} />
-        </a>
-      </div>
+     
 
       <div className="my-3">
        
         <a href="/rendezvous-secritaire">
          <img className=' bg-white p-1 ' src="/rendivou.png" width={32} />
-        </a>
-      </div>
-
-      <div className="my-3">
-       
-        <a href="/allconsulations">
-         <img className=' bg-white p-1 ' src="/consultation.jpg" width={32} />
         </a>
       </div>
 
@@ -64,4 +53,4 @@ const Sidebar: React.FC = () => {
   );
 };
 
-export default Sidebar;
+export default SidebarScritaire;

@@ -17,10 +17,12 @@ import EditMedecin from './pages/EditMedecin';
 import ManageSecretaires from './pages/ManageSecretaires';
 import RendezVousMedecin from './pages/RendezVousMedecin';
 import RendezVousSecretaire from './pages/RendezVousSecretaire';
+import SidebarScritaire from './components/SidebarScritaire';
 const App: React.FC = () => {
   return (
    <div className=' container'>
     <SidebarNavbar />
+    <SidebarScritaire />
      
 
      <Router>
