@@ -16,6 +16,8 @@ import DashboardDoctor from './pages/DashboardDoctor';
 import DashboardSecretaire from './pages/DashboardSecretaire';
 import EditMedecin from './pages/EditMedecin';
 import ManageSecretaires from './pages/ManageSecretaires';
+import RendezVousMedecin from './pages/RendezVousMedecin';
+import RendezVousSecretaire from './pages/RendezVousSecretaire';
 const App: React.FC = () => {
   return (
    <div className=' container'>
@@ -49,6 +51,10 @@ const App: React.FC = () => {
         <Route path="/edit-information" element={<EditMedecin />} />
         <Route path="/manage-secritaire" element={<ManageSecretaires />} />
         
+
+
+        <Route path="/rendezvous-medecin" element={<RendezVousMedecin />} />
+        <Route path="/rendezvous-secritaire" element={<RendezVousSecretaire />} />
 
       </Routes>
     </Router>
