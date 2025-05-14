@@ -51,7 +51,7 @@ const Sidebar: React.FC = () => {
       <div className="my-3">
        
         <a href="/allconsulations">
-         <img className=' bg-white p-1 ' src="/consultation.jpg" width={32} />
+         <img className=' bg-white p-1 ' src="/consultations.jpg" width={32} />
         </a>
       </div>
 

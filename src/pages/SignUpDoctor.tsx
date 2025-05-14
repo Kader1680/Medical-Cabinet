@@ -8,6 +8,7 @@ type MedecinType = 'Généraliste' | 'Spécialiste' | '';
 
 interface FormData {
   lastName: string;
+  usernmae: string;
   firstName: string;
   age: string;
   birthDate: string;
@@ -22,6 +23,7 @@ interface FormData {
 export const SignUpDoctor = () => {
   const [formData, setFormData] = useState<FormData>({
     lastName: '',
+    usernmae: '',
     firstName: '',
     age: '',
     birthDate: '',
@@ -75,6 +77,7 @@ export const SignUpDoctor = () => {
     if (!formData.firstName) newErrors.firstName = 'First name is required';
     if (!formData.age) newErrors.age = 'Age is required';
     if (!formData.birthDate) newErrors.birthDate = 'Birth date is required';
+    if (!formData.usernmae) newErrors.birthDate = 'username is required';
     // if (!formData.gender) newErrors.gender = 'Gender is required';
     // if (!formData.role) newErrors.role = 'Role is required';
 
@@ -288,7 +291,8 @@ export const SignUpDoctor = () => {
                   </div>
                 )}
 
-                <div className="mb-3">
+                
+            <div className="mb-3">
                   <label className="form-label">Email</label>
                   <input
                     type="email"
@@ -299,6 +303,23 @@ export const SignUpDoctor = () => {
                   />
                   {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                 </div>
+
+
+
+                <div className="mb-3">
+                  <label className="form-label">Nom d'utilisateur</label>
+                  <input
+                    type="text"
+                    className={`form-control ${errors.usernmae ? 'is-invalid' : ''}`}
+                    name="Nom d'utilisateur"
+                    value={formData.usernmae}
+                    onChange={handleChange}
+                  />
+                  {errors.usernmae && <div className="invalid-feedback">{errors.usernmae}</div>}
+                </div>
+
+
+
 
                 <div className="row">
                   <div className="col-md-6">
