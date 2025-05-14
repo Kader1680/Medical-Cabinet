@@ -33,6 +33,8 @@ const DashboardDoctor: React.FC = () => {
               <th>Date</th>
               <th>Heure</th>
               <th>Statut</th>
+              <th>Actions</th>
+
             </tr>
           </thead>
           <tbody>
@@ -41,13 +43,22 @@ const DashboardDoctor: React.FC = () => {
               <td>22 Mar 2025</td>
               <td>10:00</td>
               <td><span className="badge bg-success">Confirmé</span></td>
+                <td>
+                  <button className="btn btn-sm btn-primary">confirme</button>
+                  <button className="btn btn-sm btn-danger ms-2">Supprimer</button>
+            </td>
             </tr>
             <tr>
               <td>Ali Benyamina</td>
               <td>22 Mar 2025</td>
               <td>11:30</td>
-              <td><span className="badge bg-warning text-dark">En attente</span></td>
+              <td><span className="badge bg-danger text-white">annule</span></td>
+                <td>
+                  <button className="btn btn-sm btn-primary">confirme</button>
+                  <button className="btn btn-sm btn-danger ms-2">Supprimer</button>
+            </td>
             </tr>
+          
           </tbody>
         </table>
       </section>
@@ -158,7 +169,7 @@ const DashboardDoctor: React.FC = () => {
             </div>
           </div>
 
-          
+
         </div>
       </section>
     </div>

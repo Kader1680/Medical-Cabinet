@@ -8,8 +8,8 @@ const DashboardSecretaire: React.FC = () => {
   ];
 
   const rendezvous = [
-    { name: 'Ali Benyamina', date: '22 Mar 2025', time: '10:00', status: 'Confirmé' },
-    { name: 'Yasmine Khaled', date: '22 Mar 2025', time: '11:00', status: 'En attente' },
+    { name: 'Ali Benyamina', date: '22 Mar 2025', time: '10:00', status: 'modifie' },
+    { name: 'Yasmine Khaled', date: '22 Mar 2025', time: '11:00', status: 'annule' },
   ];
 
   return (
@@ -47,7 +47,7 @@ const DashboardSecretaire: React.FC = () => {
                 <td>{r.date}</td>
                 <td>{r.time}</td>
                 <td>
-                  <span className={`badge ${r.status === 'Confirmé' ? 'bg-success' : 'bg-warning text-dark'}`}>
+                  <span className={`badge ${r.status === 'modifie' ? 'bg-warning' : 'bg-danger text-dark'}`}>
                     {r.status}
                   </span>
                 </td>
