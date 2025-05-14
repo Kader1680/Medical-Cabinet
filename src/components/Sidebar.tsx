@@ -7,7 +7,7 @@ const Sidebar: React.FC = () => {
     <div
       className="d-flex flex-column align-items-center text-center py-4"
       style={{
-        backgroundColor: '#0d6efd',
+        backgroundColor: '#ade9e4',
         
         width: '100px',
         minHeight: '100vh',
@@ -18,14 +18,14 @@ const Sidebar: React.FC = () => {
         top: 0,
       }}
     >
-      <a href="/edit-information">
+      <a className=' text-decoration-none' href="/edit-information">
        <img
         src="/doctor.png"
         className="rounded-circle mb-2"
         alt="Doctor"
         style={{ width: '60px', height: '60px' }}
       /> <br />
-      <small className="fw-bold text-white mb-4">Dr. Amina HAMIDA</small>
+      <p className="fw-bold text-white mb-4 text-decoration-none">Dr. Amina HAMIDA</p>
 
       </a>
     
