@@ -15,6 +15,7 @@ import ChooseRole from './pages/ChooseRole';
 import DashboardDoctor from './pages/DashboardDoctor';
 import DashboardSecretaire from './pages/DashboardSecretaire';
 import EditMedecin from './pages/EditMedecin';
+import ManageSecretaires from './pages/ManageSecretaires';
 const App: React.FC = () => {
   return (
    <div className=' container'>
@@ -46,6 +47,7 @@ const App: React.FC = () => {
 
 
         <Route path="/edit-information" element={<EditMedecin />} />
+        <Route path="/manage-secritaire" element={<ManageSecretaires />} />
         
 
       </Routes>
