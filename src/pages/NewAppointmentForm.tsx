@@ -1,4 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import api from "../services/api";
+
+interface Patient {
+  id: number;
+  firstName: string;
+  lastName: string;
+}
 
 const NewAppointmentForm = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +21,16 @@ const NewAppointmentForm = () => {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [selectedPatient, setSelectedPatient] = useState("Amel Saad");
+  const [patients, setPatients] = useState<Patient[]>([]);
+  const [selectedPatientId, setSelectedPatientId] = useState("");
+
+  useEffect(() => {
+    api.get("/patients")
+      .then(res => setPatients(res.data))
+      .catch(err => {
+        console.error("Erreur de chargement des patients", err);
+      });
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -24,28 +40,38 @@ const NewAppointmentForm = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Appointment data submitted:", {
-      ...formData,
-      patient: selectedPatient
-    });
-    setIsSubmitted(true);
-    
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        lastName: "",
-        firstName: "",
-        age: "",
-        birthDate: "",
-        gender: "",
-        phone: "",
-        address: "",
-        date: "",
-        time: ""
+
+    try {
+      const response = await api.post("/appointments", {
+        ...formData,
+        patient_id: selectedPatientId,
       });
-    }, 3000);
+
+      console.log("Appointment submitted:", response.data);
+
+      setIsSubmitted(true);
+
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          lastName: "",
+          firstName: "",
+          age: "",
+          birthDate: "",
+          gender: "",
+          phone: "",
+          address: "",
+          date: "",
+          time: ""
+        });
+        setSelectedPatientId("");
+      }, 3000);
+    } catch (error: any) {
+      console.error("Erreur lors de l'enregistrement :", error);
+      alert("Une erreur est survenue.");
+    }
   };
 
   const generateTimeSlots = () => {
@@ -58,17 +84,28 @@ const NewAppointmentForm = () => {
   };
 
   return (
-    <div className="container mt-4 ce">
+    <div className="container mt-4">
       <h1 className="mb-4 text-center">Nouveau Rendez-vous</h1>
-      
-      {/* <div className="card mb-4">
-        <div className="card-body">
-          <h5 className="card-title">Patient sélectionné</h5>
-          <p className="card-text fs-4">{selectedPatient}</p>
-        </div>
-      </div> */}
 
       <form onSubmit={handleSubmit} className="border p-4 rounded-3 shadow-sm">
+        <div className="mb-3">
+          <label htmlFor="selectedPatient" className="form-label fw-bold">Patient</label>
+          <select
+            className="form-select"
+            id="selectedPatient"
+            value={selectedPatientId}
+            onChange={(e) => setSelectedPatientId(e.target.value)}
+            required
+          >
+            <option value="">Sélectionner un patient</option>
+            {patients.map((patient) => (
+              <option key={patient.id} value={patient.id}>
+                {patient.firstName} {patient.lastName}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="row mb-3">
           <div className="col-md-6">
             <label htmlFor="lastName" className="form-label fw-bold">Nom</label>
@@ -173,7 +210,6 @@ const NewAppointmentForm = () => {
               name="date"
               value={formData.date}
               onChange={handleChange}
-            //   min={format(new Date(), 'yyyy-MM-dd')}
               required
             />
           </div>
@@ -194,10 +230,6 @@ const NewAppointmentForm = () => {
             </select>
           </div>
         </div>
-
-
-
-        
 
         <div className="d-grid gap-2 d-md-flex justify-content-md-end">
           <button type="submit" className="btn btn-primary px-4">

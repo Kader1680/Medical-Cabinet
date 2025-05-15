@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import axios from 'axios'; // <-- Axios import
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 type FormData = {
   nom: string;
@@ -11,6 +13,7 @@ type FormData = {
   email: string;
 };
 
+// Fake initial data (normally fetched from backend)
 const initialData: FormData = {
   nom: 'Hamida',
   prenom: 'Amina',
@@ -24,6 +27,7 @@ const initialData: FormData = {
 
 export default function EditMedecin() {
   const [formData, setFormData] = useState<FormData>(initialData);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -33,10 +37,23 @@ export default function EditMedecin() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Submit updated user info
-    console.log('Updated Info:', formData);
+    setLoading(true);
+
+    try {
+      const response = await axios.put(
+        'http://localhost:8000/api/medecins/1', // replace `1` with dynamic medecin ID
+        formData
+      );
+      console.log('Updated Info:', response.data);
+      alert('Informations mises à jour avec succès !');
+    } catch (error: any) {
+      console.error('Erreur lors de la mise à jour :', error);
+      alert('Échec de la mise à jour.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -188,7 +205,9 @@ export default function EditMedecin() {
                   />
                 </div>
 
-                <button type="submit" className="btn btn-success w-100">Mettre à jour</button>
+                <button type="submit" className="btn btn-success w-100" disabled={loading}>
+                  {loading ? 'Mise à jour...' : 'Mettre à jour'}
+                </button>
               </form>
             </div>
           </div>

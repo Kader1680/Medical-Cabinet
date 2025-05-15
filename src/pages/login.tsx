@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import api from '../services/api';  
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const LoginDoctor = () => {
@@ -12,44 +13,56 @@ export const LoginDoctor = () => {
     password: '',
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length === 0) {
-      console.log('Login submitted:', formData);
-      alert('Login successful!');
-    } else {
-      setErrors(validationErrors);
-    }
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const validateForm = () => {
-    const newErrors = {
-      email: '',
-      password: '',
-    };
+    const newErrors = { email: '', password: '' };
 
     if (!formData.email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = 'Email requis';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
+      newErrors.email = 'Email invalide';
     }
 
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = 'Mot de passe requis';
     } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+      newErrors.password = 'Minimum 6 caractères';
     }
 
     return newErrors;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const validationErrors = validateForm();
+    if (Object.values(validationErrors).some(Boolean)) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await api.post('/login', formData); 
+
+      console.log('Connexion réussie:', response.data);
+      alert('Connexion réussie !');
+ 
+    } catch (error: any) {
+      if (error.response?.data?.message) {
+        alert('Erreur : ' + error.response.data.message);
+      } else {
+        alert("Erreur réseau.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -58,14 +71,14 @@ export const LoginDoctor = () => {
         <div className="col-md-8 col-lg-6">
           <div className="card shadow">
             <div className="card-body">
-              <h2 className="card-title text-center mb-4">Log In</h2>
+              <h2 className="card-title text-center mb-4">Connexion Médecin</h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label className="form-label">Email</label>
                   <input
                     type="email"
-                    className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                     name="email"
+                    className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                     value={formData.email}
                     onChange={handleChange}
                   />
@@ -76,8 +89,8 @@ export const LoginDoctor = () => {
                   <label className="form-label">Mot de passe</label>
                   <input
                     type="password"
-                    className={`form-control ${errors.password ? 'is-invalid' : ''}`}
                     name="password"
+                    className={`form-control ${errors.password ? 'is-invalid' : ''}`}
                     value={formData.password}
                     onChange={handleChange}
                   />
@@ -85,14 +98,14 @@ export const LoginDoctor = () => {
                 </div>
 
                 <div className="d-grid gap-2">
-                  <button type="submit" className="btn btn-primary mb-3">
-                    Log In
+                  <button type="submit" className="btn btn-primary" disabled={loading}>
+                    {loading ? 'Connexion...' : 'Connexion'}
                   </button>
                 </div>
 
-                <div className="text-center">
+                <div className="text-center mt-3">
                   <p>
-                    Don't have an account? <a href="#signup">Sign Up</a>
+                    Vous n'avez pas de compte ? <a href="#signup">Créer un compte</a>
                   </p>
                 </div>
               </form>

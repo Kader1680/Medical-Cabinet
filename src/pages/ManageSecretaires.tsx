@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import api from '../services/api'; // central axios instance
 
 type Secretaire = {
   id: number;
@@ -8,40 +9,48 @@ type Secretaire = {
 };
 
 const ManageSecretaires: React.FC = () => {
-  const [secretaires, setSecretaires] = useState<Secretaire[]>([
-    { id: 1, nom: 'Bensaid', prenom: 'Sara', email: 'sara.bensaid@hopital.dz' },
-    { id: 2, nom: 'Yahiaoui', prenom: 'Lina', email: 'lina.yahiaoui@hopital.dz' },
-  ]);
-
+  const [secretaires, setSecretaires] = useState<Secretaire[]>([]);
   const [formData, setFormData] = useState<Omit<Secretaire, 'id'>>({
     nom: '',
     prenom: '',
     email: '',
   });
-
   const [editingId, setEditingId] = useState<number | null>(null);
+
+  // Load all secretaires on mount
+  useEffect(() => {
+    api.get('/secretaires')
+      .then(res => setSecretaires(res.data))
+      .catch(err => console.error('Erreur chargement des secrétaires:', err));
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleAdd = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (editingId !== null) {
-      setSecretaires(prev =>
-        prev.map(sec =>
-          sec.id === editingId ? { ...sec, ...formData } : sec
-        )
-      );
-      setEditingId(null);
+      // Update
+      try {
+        const res = await api.put(`/secretaires/${editingId}`, formData);
+        setSecretaires(prev =>
+          prev.map(sec => (sec.id === editingId ? res.data : sec))
+        );
+        setEditingId(null);
+      } catch (err) {
+        console.error('Erreur mise à jour:', err);
+      }
     } else {
-      const newSecretaire = {
-        id: Date.now(),
-        ...formData,
-      };
-      setSecretaires(prev => [...prev, newSecretaire]);
+      // Create
+      try {
+        const res = await api.post('/secretaires', formData);
+        setSecretaires(prev => [...prev, res.data]);
+      } catch (err) {
+        console.error('Erreur ajout:', err);
+      }
     }
 
     setFormData({ nom: '', prenom: '', email: '' });
@@ -52,11 +61,18 @@ const ManageSecretaires: React.FC = () => {
     setFormData({ nom: sec.nom, prenom: sec.prenom, email: sec.email });
   };
 
-  const handleDelete = (id: number) => {
-    setSecretaires(prev => prev.filter(sec => sec.id !== id));
-    if (editingId === id) {
-      setEditingId(null);
-      setFormData({ nom: '', prenom: '', email: '' });
+  const handleDelete = async (id: number) => {
+    if (!window.confirm('Êtes-vous sûr de vouloir supprimer cette secrétaire ?')) return;
+
+    try {
+      await api.delete(`/secretaires/${id}`);
+      setSecretaires(prev => prev.filter(sec => sec.id !== id));
+      if (editingId === id) {
+        setEditingId(null);
+        setFormData({ nom: '', prenom: '', email: '' });
+      }
+    } catch (err) {
+      console.error('Erreur suppression:', err);
     }
   };
 
@@ -64,8 +80,8 @@ const ManageSecretaires: React.FC = () => {
     <div className="container mt-5">
       <h3 className="mb-4">Gestion des Secrétaires</h3>
 
-      {/* Form */}
-      <form onSubmit={handleAdd} className="card p-3 mb-4">
+      {/* Formulaire */}
+      <form onSubmit={handleSubmit} className="card p-3 mb-4">
         <div className="row">
           <div className="col-md-4 mb-3">
             <label htmlFor="nom" className="form-label">Nom</label>
@@ -121,7 +137,7 @@ const ManageSecretaires: React.FC = () => {
         )}
       </form>
 
-      {/* Table */}
+      {/* Liste des secrétaires */}
       <table className="table table-bordered">
         <thead className="table-light">
           <tr>
@@ -138,10 +154,16 @@ const ManageSecretaires: React.FC = () => {
               <td>{sec.prenom}</td>
               <td>{sec.email}</td>
               <td>
-                <button className="btn btn-warning btn-sm me-2" onClick={() => handleEdit(sec)}>
+                <button
+                  className="btn btn-warning btn-sm me-2"
+                  onClick={() => handleEdit(sec)}
+                >
                   Modifier
                 </button>
-                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(sec.id)}>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleDelete(sec.id)}
+                >
                   Supprimer
                 </button>
               </td>

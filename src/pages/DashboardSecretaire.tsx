@@ -1,25 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
+type Patient = {
+  name: string;
+  date: string;
+  diag: string;
+};
+
+type Rendezvous = {
+  name: string;
+  date: string;
+  time: string;
+  status: string;
+};
 
 const DashboardSecretaire: React.FC = () => {
-  const patients = [
-    { name: 'Layla Hassan', date: '21 Mar 2025', diag: 'Fièvre' },
-    { name: 'Tariq Mahmoud', date: '20 Mar 2025', diag: 'Toux' },
-    { name: 'Rania Fadel', date: '19 Mar 2025', diag: 'Otite' },
-  ];
+  const [patients, setPatients] = useState<Patient[]>([]);
+  const [rendezvous, setRendezvous] = useState<Rendezvous[]>([]);
 
-  const rendezvous = [
-    { name: 'Ali Benyamina', date: '22 Mar 2025', time: '10:00', status: 'modifie' },
-    { name: 'Yasmine Khaled', date: '22 Mar 2025', time: '11:00', status: 'annule' },
-  ];
+  useEffect(() => {
+    axios.get('/api/patients') 
+      .then(res => setPatients(res.data))
+      .catch(err => console.error('Error fetching patients:', err));
+
+    // Fetch rendezvous
+    axios.get('/api/rendezvous') 
+      .then(res => setRendezvous(res.data))
+      .catch(err => console.error('Error fetching rendezvous:', err));
+  }, []);
 
   return (
     <div className="container mt-4">
       {/* Greeting */}
       <div className="d-flex justify-content-between align-items-center mb-5">
         <div>
-          <h2>
-            Bonjour <span className="text-primary">Mme. Secrétaire</span>
-          </h2>
+          <h2>Bonjour <span className="text-primary">Mme. Secrétaire</span></h2>
           <p className="text-muted">Bienvenue dans le tableau de bord.</p>
         </div>
         <div>
@@ -27,7 +42,7 @@ const DashboardSecretaire: React.FC = () => {
         </div>
       </div>
 
-      {/* Section: Rendez-vous */}
+      {/* Rendez-vous Section */}
       <section className="mb-5">
         <h4 className="text-secondary mb-3">Rendez-vous</h4>
         <table className="table table-bordered">
@@ -61,7 +76,7 @@ const DashboardSecretaire: React.FC = () => {
         </table>
       </section>
 
-      {/* Section: Les Patients */}
+      {/* Patients Section */}
       <section className="mb-5">
         <h4 className="text-secondary mb-3">Les Patients</h4>
         <table className="table table-hover">

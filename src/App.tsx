@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
  
-import Register from './pages/register';
 import "./App.css"
 import SidebarNavbar from './components/Sidebar';
 import ConsultationForm from './pages/ConsultationForm';
@@ -30,7 +29,7 @@ const App: React.FC = () => {
     
       
         <Route path="/signUpdoctor" element={<SignUpDoctor />} />
-        
+
         <Route path="/" element={<LoginDoctor />} />
     
 

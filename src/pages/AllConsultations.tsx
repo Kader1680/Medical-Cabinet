@@ -1,27 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import api from '../services/api'; 
 
 interface Consultation {
+  id: number;
   name: string;
   date: string;
   diag: string;
 }
 
 const AllConsultations: React.FC = () => {
-  const [consultations, setConsultations] = useState<Consultation[]>([
-    { name: 'Layla Hassan', date: '21 mar 2025', diag: 'Fièvre' },
-    { name: 'Tariq Mahmoud', date: '21 mar 2025', diag: 'Toux' },
-    { name: 'Rania Fadel', date: '20 mar 2025', diag: 'Otite' },
-    { name: 'Omar Saleh', date: '19 mar 2025', diag: 'Angine' },
-    { name: 'Layla Hassan', date: '21 mar 2025', diag: 'Grippe' },
-    { name: 'Tariq Mahmoud', date: '21 mar 2025', diag: 'Grippe' },
-  ]);
-
+  const [consultations, setConsultations] = useState<Consultation[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [newDiag, setNewDiag] = useState<string>('');
 
-  const handleDelete = (index: number) => {
-    const updated = consultations.filter((_, i) => i !== index);
-    setConsultations(updated);
+  useEffect(() => {
+    fetchConsultations();
+  }, []);
+
+  const fetchConsultations = async () => {
+    try {
+      const res = await api.get('/consultations');
+      setConsultations(res.data);
+    } catch (error) {
+      console.error("Erreur lors du chargement des consultations", error);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await api.delete(`/consultations/${id}`);
+      setConsultations(consultations.filter(c => c.id !== id));
+    } catch (error) {
+      console.error("Erreur lors de la suppression", error);
+    }
   };
 
   const openEditModal = (index: number) => {
@@ -31,13 +42,22 @@ const AllConsultations: React.FC = () => {
     modal.show();
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     if (selectedIndex === null) return;
-    const updated = [...consultations];
-    updated[selectedIndex].diag = newDiag;
-    setConsultations(updated);
-    const modal = (window as any).bootstrap.Modal.getInstance(document.getElementById('editModal'));
-    modal.hide();
+
+    const consultation = consultations[selectedIndex];
+
+    try {
+      await api.put(`/consultations/${consultation.id}`, { diag: newDiag });
+      const updated = [...consultations];
+      updated[selectedIndex].diag = newDiag;
+      setConsultations(updated);
+
+      const modal = (window as any).bootstrap.Modal.getInstance(document.getElementById('editModal'));
+      modal.hide();
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour", error);
+    }
   };
 
   return (
@@ -76,15 +96,15 @@ const AllConsultations: React.FC = () => {
           </thead>
           <tbody>
             {consultations.map((row, index) => (
-              <tr key={index}>
+              <tr key={row.id}>
                 <td>{row.name}</td>
                 <td>{row.date}</td>
                 <td>{row.diag}</td>
-                 <td>
-                    <button className="btn btn-primary btn-sm ">Voir Dossier</button>
-                    <button className="btn btn-warning btn-sm ms-2">update</button>
-                    <button className="btn btn-danger btn-sm ms-2">delete</button>
-                 </td>
+                <td>
+                  <button className="btn btn-primary btn-sm">Voir Dossier</button>
+                  <button className="btn btn-warning btn-sm ms-2" onClick={() => openEditModal(index)}>Modifier</button>
+                  <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(row.id)}>Supprimer</button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -106,15 +126,8 @@ const AllConsultations: React.FC = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="editModalLabel">
-                Modifier le diagnostic
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Fermer"
-              ></button>
+              <h5 className="modal-title" id="editModalLabel">Modifier le diagnostic</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
             </div>
             <div className="modal-body">
               <input
@@ -125,12 +138,8 @@ const AllConsultations: React.FC = () => {
               />
             </div>
             <div className="modal-footer">
-              <button className="btn btn-secondary" data-bs-dismiss="modal">
-                Annuler
-              </button>
-              <button className="btn btn-primary" onClick={handleUpdate}>
-                Enregistrer
-              </button>
+              <button className="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <button className="btn btn-primary" onClick={handleUpdate}>Enregistrer</button>
             </div>
           </div>
         </div>
