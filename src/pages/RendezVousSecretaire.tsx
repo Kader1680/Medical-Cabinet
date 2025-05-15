@@ -43,13 +43,10 @@ const RendezVousSecretaire = () => {
               <td>{r.date}</td>
               <td>{r.time}</td>
               <td>{r.status}</td>
-              <td>
-                <button className="btn btn-warning btn-sm me-2" onClick={() => modifier(r.id)}>
-                  Modifier
-                </button>
-                <button className="btn btn-danger btn-sm" onClick={() => annuler(r.id)}>
-                  Annuler
-                </button>
+               <td>
+                <button className="btn btn-primary btn-sm ">Voir</button>
+                <button className="btn btn-warning btn-sm ms-2">modifie</button>
+                <button className="btn btn-danger btn-sm ms-2">anulee</button>
               </td>
             </tr>
           ))}

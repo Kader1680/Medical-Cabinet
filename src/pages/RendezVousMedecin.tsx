@@ -40,14 +40,13 @@ const RendezVousMedecin = () => {
               <td>{r.date}</td>
               <td>{r.time}</td>
               <td>{r.status}</td>
+               
               <td>
-                <button className="btn btn-success btn-sm me-2" onClick={() => confirmer(r.id)}>
-                  Confirmer
-                </button>
-                <button className="btn btn-danger btn-sm" onClick={() => annuler(r.id)}>
-                  Annuler
-                </button>
+                <button className="btn btn-primary btn-sm ">Voir</button>
+                <button className="btn btn-warning btn-sm ms-2">confirme</button>
+                <button className="btn btn-danger btn-sm ms-2">anulee</button>
               </td>
+             
             </tr>
           ))}
         </tbody>

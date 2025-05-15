@@ -30,7 +30,8 @@ const App: React.FC = () => {
     
       
         <Route path="/signUpdoctor" element={<SignUpDoctor />} />
-        <Route path="/login" element={<LoginDoctor />} />
+        
+        <Route path="/" element={<LoginDoctor />} />
     
 
         <Route path="/consultationform" element={<ConsultationForm />} />
@@ -41,7 +42,7 @@ const App: React.FC = () => {
 
         <Route path="/allpatients" element={<AllPatients />} />
         <Route path="/allconsulations" element={<AllConsultations />} />
-        <Route path="/" element={<SignUpDoctor />} />
+        <Route path="/sign-up" element={<SignUpDoctor />} />
 
 
         <Route path="/dashboard" element={<DashboardDoctor />} />
