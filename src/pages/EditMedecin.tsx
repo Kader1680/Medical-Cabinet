@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios'; // <-- Axios import
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 type FormData = {
@@ -11,9 +11,10 @@ type FormData = {
   role: string;
   specialite: string;
   email: string;
+  username: string;
+  password: string;
 };
 
-// Fake initial data (normally fetched from backend)
 const initialData: FormData = {
   nom: 'Hamida',
   prenom: 'Amina',
@@ -23,6 +24,8 @@ const initialData: FormData = {
   role: 'Médecin',
   specialite: 'Cardiologie',
   email: 'amina.hamida@clinique.dz',
+  username: 'amina.hamida',
+  password: 'password123', // Note: In real apps, don't handle passwords like this on frontend!
 };
 
 export default function EditMedecin() {
@@ -43,7 +46,7 @@ export default function EditMedecin() {
 
     try {
       const response = await axios.put(
-        'http://localhost:8000/api/medecins/1', // replace `1` with dynamic medecin ID
+        'http://localhost:8000/api/medecins/1',
         formData
       );
       console.log('Updated Info:', response.data);
@@ -95,7 +98,7 @@ export default function EditMedecin() {
 
                 <div className="row">
                   <div className="col-md-6 mb-3">
-                    <label htmlFor="age" className="form-label">Age</label>
+                    <label htmlFor="age" className="form-label">Âge</label>
                     <input
                       id="age"
                       name="age"
@@ -108,7 +111,7 @@ export default function EditMedecin() {
                   </div>
 
                   <div className="col-md-6 mb-3">
-                    <label htmlFor="dateDeNaissance" className="form-label">Date De Naissance</label>
+                    <label htmlFor="dateDeNaissance" className="form-label">Date de Naissance</label>
                     <input
                       id="dateDeNaissance"
                       name="dateDeNaissance"
@@ -151,36 +154,6 @@ export default function EditMedecin() {
                 </div>
 
                 <div className="mb-3">
-                  <label className="form-label">Rôle</label>
-                  <div className="d-flex gap-4">
-                    <div className="form-check">
-                      <input
-                        id="medecin"
-                        name="role"
-                        type="radio"
-                        className="form-check-input"
-                        value="Médecin"
-                        checked={formData.role === 'Médecin'}
-                        onChange={handleChange}
-                      />
-                      <label htmlFor="medecin" className="form-check-label">Médecin</label>
-                    </div>
-                    <div className="form-check">
-                      <input
-                        id="secretaire"
-                        name="role"
-                        type="radio"
-                        className="form-check-input"
-                        value="Secrétaire"
-                        checked={formData.role === 'Secrétaire'}
-                        onChange={handleChange}
-                      />
-                      <label htmlFor="secretaire" className="form-check-label">Secrétaire</label>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mb-3">
                   <label htmlFor="specialite" className="form-label">Spécialité</label>
                   <input
                     id="specialite"
@@ -201,6 +174,32 @@ export default function EditMedecin() {
                     className="form-control"
                     required
                     value={formData.email}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="username" className="form-label">Nom d'utilisateur</label>
+                  <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    className="form-control"
+                    required
+                    value={formData.username}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">Mot de passe</label>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    className="form-control"
+                    required
+                    value={formData.password}
                     onChange={handleChange}
                   />
                 </div>

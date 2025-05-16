@@ -1,15 +1,19 @@
 import { useState } from 'react';
 import api from '../services/api';  
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 
 export const LoginDoctor = () => {
+
+    const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: '',
   });
 
   const [errors, setErrors] = useState({
-    email: '',
+    username: '',
     password: '',
   });
 
@@ -21,12 +25,12 @@ export const LoginDoctor = () => {
   };
 
   const validateForm = () => {
-    const newErrors = { email: '', password: '' };
+    const newErrors = { username: '', password: '' };
 
-    if (!formData.email) {
-      newErrors.email = 'Email requis';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email invalide';
+    if (!formData.username) {
+      newErrors.username = 'Email requis';
+    } else if (!/\S+@\S+\.\S+/.test(formData.username)) {
+      newErrors.username = 'Email invalide';
     }
 
     if (!formData.password) {
@@ -63,8 +67,20 @@ export const LoginDoctor = () => {
     } finally {
       setLoading(false);
     }
+
+       
+
+  
   };
 
+
+  const handleLogin = (role: string) => {
+      localStorage.setItem('role', role);
+      if (role === 'medecine') {
+        navigate('/dashboard-medecine'); 
+      }
+      navigate('/dashboard-seceritaire'); 
+  };
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -72,17 +88,18 @@ export const LoginDoctor = () => {
           <div className="card shadow">
             <div className="card-body">
               <h2 className="card-title text-center mb-4">Connexion Médecin</h2>
-              <form onSubmit={handleSubmit}>
+              
+              <form onSubmit={() => handleLogin('seceritaire')}>
                 <div className="mb-3">
-                  <label className="form-label">Email</label>
+                  <label className="form-label">nom utilisataire</label>
                   <input
-                    type="email"
-                    name="email"
-                    className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-                    value={formData.email}
+                    type="text"
+                    name="username"
+                    className={`form-control ${errors.username ? 'is-invalid' : ''}`}
+                    value={formData.username}
                     onChange={handleChange}
                   />
-                  {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                  {errors.username && <div className="invalid-feedback">{errors.username}</div>}
                 </div>
 
                 <div className="mb-3">
