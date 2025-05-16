@@ -32,18 +32,21 @@ const Sidebar: React.FC = () => {
 
       {/* Icons */}
       <div className="my-3">
-        <img className=' f bg-white p-1 ' src="/folders_2120926 1.png" alt="folder" width={32} />
+         <a href="/allconsulations">
+            <img className=' f bg-white p-1 ' src="/folders_2120926 1.png" alt="folder" width={32} />
+
+        </a>
       </div>
       <div className="my-3">
        
-        <a href="/manage-secritaire">
+        <a href="/all-secretaires">
          <img className=' bg-white p-1 ' src="/bookkeeping_12871302 1.png" alt="user" width={32} />
         </a>
       </div>
 
       <div className="my-3">
        
-        <a href="/rendezvous-secritaire">
+        <a href="/rendezvous-medecin">
          <img className=' bg-white p-1 ' src="/rendivou.png" width={32} />
         </a>
       </div>
@@ -57,8 +60,14 @@ const Sidebar: React.FC = () => {
 
 
 
+
       <div className="mt-auto mb-3">
-        <img  className=' bg-white p-1 ' src="/log-out_10024613-removebg-preview 1.png" alt="logout" width={32} />
+         <a href="/">
+         
+           <img  className=' bg-white p-1 ' src="/log-out_10024613-removebg-preview 1.png" alt="logout" width={32} />
+
+         
+         </a>
       </div>
     </div>
   );

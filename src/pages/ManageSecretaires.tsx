@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import api from '../services/api'; // central axios instance
+import api from '../services/api';  
 
 type Secretaire = {
   id: number;
@@ -33,7 +33,6 @@ const ManageSecretaires: React.FC = () => {
     e.preventDefault();
 
     if (editingId !== null) {
-      // Update
       try {
         const res = await api.put(`/secretaires/${editingId}`, formData);
         setSecretaires(prev =>

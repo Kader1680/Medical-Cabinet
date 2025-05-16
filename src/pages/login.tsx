@@ -105,7 +105,7 @@ export const LoginDoctor = () => {
 
                 <div className="text-center mt-3">
                   <p>
-                    Vous n'avez pas de compte ? <a href="#signup">Créer un compte</a>
+                    Vous n'avez pas de compte ? <a href="/signUpdoctor">Créer un compte</a>
                   </p>
                 </div>
               </form>

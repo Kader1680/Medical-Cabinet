@@ -110,7 +110,7 @@ const ConsultationForm: React.FC = () => {
   };
 
   return (
-    <div className="container mt-5 p-4 bg-white shadow rounded">
+    <div className="container mt-5 p-4 bg-white shadow rounded ms-5">
       <h2 className="text-center text-primary mb-4">Consultation</h2>
       
       {error && <div className="alert alert-danger">{error}</div>}
