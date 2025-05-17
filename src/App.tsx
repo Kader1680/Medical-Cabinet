@@ -62,6 +62,11 @@ const AppLayout: React.FC = () => {
         <Route path="/secretaire/rendezvous/edit/:id" element={<RendezvousEditPage />} />
 
 
+        <Route path="/dashboard" element={<Bienvenue />} />
+
+        
+
+
       </Routes>
     </div>
   );

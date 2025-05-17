@@ -33,7 +33,7 @@ const Sidebar: React.FC = () => {
           alt="Doctor"
           style={{ width: '60px', height: '60px' }}
         />
-        <p  className="fw-bold mb-4">Dr. Amina HAMIDA</p>
+        {/* <p  className="fw-bold mb-4">Dr. Amina HAMIDA</p> */}
       </a>
 
       
@@ -64,14 +64,6 @@ const Sidebar: React.FC = () => {
       </div>
 
 
-      <div className="my-3 d-flex flex-column align-items-center">
-        <a style={linkStyle} href="/allconsulations" className="d-flex flex-column align-items-center">
-          <img className='bg-white p-1' src="/consultations.jpg" alt="Dossier" width={32} />
-          <span style={linkStyle}>Dossiers</span>
-        </a>
-      </div>
-
-    
 
       
         </div>

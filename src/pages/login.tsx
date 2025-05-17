@@ -77,9 +77,9 @@ export const LoginDoctor = () => {
   const handleLogin = (role: string) => {
       localStorage.setItem('role', role);
       if (role === 'medecine') {
-        navigate('/dashboard-medecine'); 
+        navigate('/dashboard'); 
       }
-      navigate('/dashboard-seceritaire'); 
+      navigate('/dashboard'); 
   };
   return (
     <div className="container mt-5">
