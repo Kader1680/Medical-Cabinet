@@ -77,7 +77,10 @@ const item = localStorage.getItem('role');
             placeholder="Rechercher un patient"
             className="form-control w-50"
           />
-          <button className="btn btn-primary">+ Nouvel patient</button>
+           {role === "secretaire" && (
+                  <a href ='/add-patient'> <button className="btn btn-primary">+ Nouvel patient</button></a>
+           )}
+
         </div>
 
         <div className="mb-4 d-flex justify-content-around align-items-center">

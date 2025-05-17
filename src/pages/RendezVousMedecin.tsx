@@ -90,7 +90,11 @@ const DashboardSecretaire: React.FC = () => {
             placeholder="Rechercher un patient"
             className="form-control w-50"
           />
-          <a href ='/add-NewAppointmentForm'> <button className="btn btn-primary">+ Nouvel rendi-vous</button></a>
+           {role === "secretaire" && (
+                  <a href ='/add-NewAppointmentForm'> <button className="btn btn-primary">+ Nouvel rendi-vous</button></a>
+           )}
+
+
         </div>
 
         <div className="mb-4 d-flex justify-content-around align-items-center">
