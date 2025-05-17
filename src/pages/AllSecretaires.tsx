@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../services/api';
+import api from '../services/api'; // Make sure this is correctly configured
 
 interface Secretaire {
   id: number;
@@ -36,6 +36,19 @@ const AllSecretaires: React.FC = () => {
     navigate(`/edit-secretaire/${id}`);
   };
 
+  const handleDelete = async (id: number) => {
+    const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer ce secrétaire ?");
+    if (!confirmDelete) return;
+
+    try {
+      await api.delete(`/secretaires/${id}`);
+      setSecretaires(prev => prev.filter(sec => sec.id !== id));
+    } catch (error) {
+      console.error("Erreur lors de la suppression du secrétaire :", error);
+      alert("Échec de la suppression. Veuillez réessayer.");
+    }
+  };
+
   return (
     <div className="container mt-4">
       <div className="flex-grow-1 ms-5 p-4" style={{ marginLeft: '120px' }}>
@@ -46,7 +59,7 @@ const AllSecretaires: React.FC = () => {
             className="form-control w-50"
           />
           <button style={{ backgroundColor: "#3842E2" }} className="btn btn-primary">
-            <a className="text-white text-decoration-none" href="/manage-secritaire">+ Ajouter Secrétaire</a>
+            <a className="text-white text-decoration-none" href="/add-secretary">+ Ajouter Secrétaire</a>
           </button>
         </div>
 
@@ -87,6 +100,14 @@ const AllSecretaires: React.FC = () => {
                     onClick={() => handleEditClick(row.id)}
                   >
                     Modifier
+                  </button>
+
+                  <button
+                    style={{ backgroundColor: "#dc3545" }}
+                    className="btn btn-danger btn-sm ms-2"
+                    onClick={() => handleDelete(row.id)}
+                  >
+                    Supprimer
                   </button>
                 </td>
               </tr>
