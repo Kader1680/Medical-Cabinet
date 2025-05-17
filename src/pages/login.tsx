@@ -89,7 +89,7 @@ export const LoginDoctor = () => {
             <div className="card-body">
               <h2 className="card-title text-center mb-4">Connexion Médecin</h2>
               
-              <form onSubmit={() => handleLogin('seceritaire')}>
+              <form onSubmit={() => handleLogin('medecine')}>
                 <div className="mb-3">
                   <label className="form-label">nom utilisataire</label>
                   <input

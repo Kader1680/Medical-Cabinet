@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const Sidebar: React.FC = () => {
+  const item = localStorage.getItem('role');
+  const role = item;
 
-  const item = localStorage.getItem('role')
-  const [role, setRole] = useState(item); 
-
+  const linkStyle: React.CSSProperties = {
+    color: 'blue',
+    fontSize: '12px',
+    marginTop: '4px',
+    textDecoration: 'none',
+    fontWeight: 'bold',
+  };
 
   return (
     <div
@@ -20,45 +26,65 @@ const Sidebar: React.FC = () => {
         top: 0,
       }}
     >
-      <a className=' text-decoration-none' href="/edit-information">
+      <a style={linkStyle} className='text-decoration-none' href="/edit-information">
         <img
           src="/doctor.png"
           className="rounded-circle mb-2"
           alt="Doctor"
           style={{ width: '60px', height: '60px' }}
-        /> <br />
-        <p className="fw-bold text-white mb-4 text-decoration-none">Dr. Amina HAMIDA</p>
+        />
+        <p  className="fw-bold mb-4">Dr. Amina HAMIDA</p>
       </a>
 
-      <div className="my-3">
-        <a href="/allconsulations">
-          <img className=' bg-white p-1' src="/folders_2120926 1.png" alt="folder" width={32} />
+      
+
+      <div className="my-3 d-flex flex-column align-items-center">
+        <a style={linkStyle} href="/allpatients" className="d-flex flex-column align-items-center">
+          <img className='bg-white p-1' src="/patient.jpg" alt="Patients" width={32} />
+          <span style={linkStyle}>Patients</span>
         </a>
       </div>
 
       {role === "medecine" && (
-        <div className="my-3">
-          <a href="/all-secretaires">
-            <img className=' bg-white p-1' src="/bookkeeping_12871302 1.png" alt="user" width={32} />
+
+        <div>
+  <div className="my-3 d-flex flex-column align-items-center">
+          <a style={linkStyle} href="/all-secretaires" className="d-flex flex-column align-items-center">
+            <img className='bg-white p-1' src="/bookkeeping_12871302 1.png" alt="Secrétaires" width={32} />
+            <span style={linkStyle}>Secrétaires</span>
           </a>
         </div>
+
+
+<div className="my-3 d-flex flex-column align-items-center">
+        <a style={linkStyle} href="/allconsulations" className="d-flex flex-column align-items-center">
+          <img className='bg-white p-1' src="/folders_2120926 1.png" alt="Consultations" width={32} />
+          <span style={linkStyle}>Consultations</span>
+        </a>
+      </div>
+      
+        </div>
+      
       )}
 
-      <div className="my-3">
-        <a href="/rendezvous-medecin">
-          <img className=' bg-white p-1' src="/rendivou.png" width={32} />
+      <div className="my-3 d-flex flex-column align-items-center">
+        <a style={linkStyle} href="/rendezvous-medecin" className="d-flex flex-column align-items-center">
+          <img className='bg-white p-1' src="/rendivou.png" alt="Rendez-vous" width={32} />
+          <span style={linkStyle}>Rendez-vous</span>
         </a>
       </div>
 
-      <div className="my-3">
-        <a href="/allconsulations">
-          <img className=' bg-white p-1' src="/consultations.jpg" width={32} />
+      <div className="my-3 d-flex flex-column align-items-center">
+        <a style={linkStyle} href="/allconsulations" className="d-flex flex-column align-items-center">
+          <img className='bg-white p-1' src="/consultations.jpg" alt="Dossier" width={32} />
+          <span style={linkStyle}>Dossiers</span>
         </a>
       </div>
 
-      <div className="mt-auto mb-3">
-        <a href="/">
-          <img className=' bg-white p-1' src="/log-out_10024613-removebg-preview 1.png" alt="logout" width={32} />
+      <div style={linkStyle} className="mt-auto mb-3 d-flex flex-column align-items-center">
+        <a style={linkStyle} href="/" className="d-flex flex-column align-items-center">
+          <img className='bg-white p-1' src="/log-out_10024613-removebg-preview 1.png" alt="Déconnexion" width={32} />
+          <span style={linkStyle}>Déconnexion</span>
         </a>
       </div>
     </div>

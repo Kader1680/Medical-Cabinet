@@ -14,7 +14,10 @@ const EditSecretaire: React.FC = () => {
     genre: '',
     telephone: '',
     dateNaissance: '',
+    photo: '', // store URL or filename
   });
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchSecretaire = async () => {
@@ -37,9 +40,34 @@ const EditSecretaire: React.FC = () => {
     }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
   const handleSubmit = async () => {
     try {
-      await api.put(`/secretaires/${id}`, formData);
+      const data = new FormData();
+      data.append('nom', formData.nom);
+      data.append('prenom', formData.prenom);
+      data.append('email', formData.email);
+      data.append('age', String(formData.age));
+      data.append('genre', formData.genre);
+      data.append('telephone', formData.telephone);
+      data.append('dateNaissance', formData.dateNaissance);
+
+      if (selectedFile) {
+        data.append('photo', selectedFile);
+      }
+
+      await api.post(`/secretaires/${id}`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
       navigate('/');
     } catch (error) {
       console.error("Erreur lors de la mise à jour :", error);
@@ -49,6 +77,25 @@ const EditSecretaire: React.FC = () => {
   return (
     <div className="container mt-5">
       <h2>Modifier les informations du Secrétaire</h2>
+
+      {/* Photo preview + upload */}
+      <div className="mb-3">
+        <label className="form-label">Photo</label>
+        {formData.photo || selectedFile ? (
+          <div className="mb-2">
+            <img
+              src={
+                selectedFile
+                  ? URL.createObjectURL(selectedFile)
+                  : `/uploads/${formData.photo}`
+              }
+              alt="Aperçu"
+              style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '10px' }}
+            />
+          </div>
+        ) : null}
+        <input type="file" className="form-control" accept="image/*" onChange={handleFileChange} />
+      </div>
 
       <div className="mb-3">
         <label className="form-label">Nom</label>

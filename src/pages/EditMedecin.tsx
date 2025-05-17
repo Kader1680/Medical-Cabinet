@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -13,6 +13,7 @@ type FormData = {
   email: string;
   username: string;
   password: string;
+  photo?: string;
 };
 
 const initialData: FormData = {
@@ -25,11 +26,13 @@ const initialData: FormData = {
   specialite: 'Cardiologie',
   email: 'amina.hamida@clinique.dz',
   username: 'amina.hamida',
-  password: 'password123', // Note: In real apps, don't handle passwords like this on frontend!
+  password: 'password123',
+  photo: '', // initial photo URL or filename if needed
 };
 
 export default function EditMedecin() {
   const [formData, setFormData] = useState<FormData>(initialData);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -40,15 +43,37 @@ export default function EditMedecin() {
     }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const response = await axios.put(
-        'http://localhost:8000/api/medecins/1',
-        formData
+      const data = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        // data.append(key, value);
+      });
+
+      if (selectedFile) {
+        data.append('photo', selectedFile);
+      }
+
+      const response = await axios.post(
+        'http://localhost:8000/api/medecins/1?_method=PUT',
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       );
+
       console.log('Updated Info:', response.data);
       alert('Informations mises à jour avec succès !');
     } catch (error: any) {
@@ -67,6 +92,55 @@ export default function EditMedecin() {
             <div className="card-body p-4">
               <h2 className="card-title text-center mb-4">Modifier les Informations</h2>
 
+              {/* Image Upload & Preview */}
+              <div className="mb-4 text-center">
+                <label
+                  htmlFor="photoUpload"
+                  className="d-inline-block position-relative"
+                  style={{
+                    cursor: 'pointer',
+                    width: '120px',
+                    height: '120px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    border: '2px dashed #ced4da',
+                  }}
+                >
+                  <img
+                    src={
+                      selectedFile
+                        ? URL.createObjectURL(selectedFile)
+                        : formData.photo
+                          ? `/uploads/${formData.photo}`
+                          : 'https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740'
+                    }
+                    alt="Photo"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                    }}
+                  />
+                  <div
+                    className="position-absolute bottom-0 start-0 w-100 text-white text-center py-1"
+                    style={{
+                      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                      fontSize: '0.75rem',
+                    }}
+                  >
+                    Modifier
+                  </div>
+                </label>
+                <input
+                  id="photoUpload"
+                  type="file"
+                  accept="image/*"
+                  className="d-none"
+                  onChange={handleFileChange}
+                />
+              </div>
+
+              {/* Form */}
               <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-md-6 mb-3">
@@ -81,7 +155,6 @@ export default function EditMedecin() {
                       onChange={handleChange}
                     />
                   </div>
-
                   <div className="col-md-6 mb-3">
                     <label htmlFor="prenom" className="form-label">Prénom</label>
                     <input
@@ -109,7 +182,6 @@ export default function EditMedecin() {
                       onChange={handleChange}
                     />
                   </div>
-
                   <div className="col-md-6 mb-3">
                     <label htmlFor="dateDeNaissance" className="form-label">Date de Naissance</label>
                     <input
@@ -208,6 +280,7 @@ export default function EditMedecin() {
                   {loading ? 'Mise à jour...' : 'Mettre à jour'}
                 </button>
               </form>
+
             </div>
           </div>
         </div>

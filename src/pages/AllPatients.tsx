@@ -11,6 +11,8 @@ interface Patient {
   adresse: string;
 }
 
+
+
 const AllPatients: React.FC = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -62,6 +64,10 @@ const AllPatients: React.FC = () => {
     fetchPatients();
   }, []);
 
+
+const item = localStorage.getItem('role');
+ const role = item 
+
   return (
     <div className="container mt-4 ms-5">
       <div className="flex-grow-1 ms-5 p-4" style={{ marginLeft: '120px' }}>
@@ -88,7 +94,7 @@ const AllPatients: React.FC = () => {
       </div>
 
       <h5>Tous les Patients</h5>
-      <table className="table table-bordered table-hover">
+      <table className="table">
         <thead className="table-light">
           <tr>
             <th>Nom</th>
@@ -123,7 +129,21 @@ const AllPatients: React.FC = () => {
                 <td>{patient.genre}</td>
                 <td>{patient.adresse}</td>
                 <td>
-                  <button className="btn btn-primary btn-sm rounded-5">Voir Dossier</button>
+                   {
+
+                   (role === 'medecine' ) ?
+                    
+                  <button className="btn btn-primary btn-sm rounded-5">voir doccier</button>
+                      
+                    :  
+                    
+                  <div>
+                       <button className="btn btn-warning btn-sm rounded-5">modifer</button>
+                       <button className="btn btn-danger btn-sm rounded-5">suprimier</button>
+                  </div>
+               
+                    } 
+
              
                 </td>
               </tr>
