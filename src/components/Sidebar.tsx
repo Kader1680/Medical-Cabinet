@@ -48,7 +48,7 @@ const Sidebar: React.FC = () => {
       {role === "medecine" && (
 
         <div>
-  <div className="my-3 d-flex flex-column align-items-center">
+      <div className="my-3 d-flex flex-column align-items-center">
           <a style={linkStyle} href="/all-secretaires" className="d-flex flex-column align-items-center">
             <img className='bg-white p-1' src="/bookkeeping_12871302 1.png" alt="Secrétaires" width={32} />
             <span style={linkStyle}>Secrétaires</span>
@@ -56,23 +56,13 @@ const Sidebar: React.FC = () => {
         </div>
 
 
-<div className="my-3 d-flex flex-column align-items-center">
+      <div className="my-3 d-flex flex-column align-items-center">
         <a style={linkStyle} href="/allconsulations" className="d-flex flex-column align-items-center">
           <img className='bg-white p-1' src="/folders_2120926 1.png" alt="Consultations" width={32} />
           <span style={linkStyle}>Consultations</span>
         </a>
       </div>
-      
-        </div>
-      
-      )}
 
-      <div className="my-3 d-flex flex-column align-items-center">
-        <a style={linkStyle} href="/rendezvous-medecin" className="d-flex flex-column align-items-center">
-          <img className='bg-white p-1' src="/rendivou.png" alt="Rendez-vous" width={32} />
-          <span style={linkStyle}>Rendez-vous</span>
-        </a>
-      </div>
 
       <div className="my-3 d-flex flex-column align-items-center">
         <a style={linkStyle} href="/allconsulations" className="d-flex flex-column align-items-center">
@@ -81,6 +71,21 @@ const Sidebar: React.FC = () => {
         </a>
       </div>
 
+    
+
+      
+        </div>
+      
+      )}
+
+       <div className="my-3 d-flex flex-column align-items-center">
+        <a style={linkStyle} href="/rendezvous-medecin" className="d-flex flex-column align-items-center">
+          <img className='bg-white p-1' src="/rendivou.png" alt="Rendez-vous" width={32} />
+          <span style={linkStyle}>Rendez-vous</span>
+        </a>
+      </div>
+
+   
       <div style={linkStyle} className="mt-auto mb-3 d-flex flex-column align-items-center">
         <a style={linkStyle} href="/" className="d-flex flex-column align-items-center">
           <img className='bg-white p-1' src="/log-out_10024613-removebg-preview 1.png" alt="Déconnexion" width={32} />

@@ -15,10 +15,11 @@ import DashboardSecretaire from './pages/DashboardSecretaire';
 import EditMedecin from './pages/EditMedecin';
 import ManageSecretaires from './pages/ManageSecretaires';
 import RendezVousMedecin from './pages/RendezVousMedecin';
-import RendezVousSecretaire from './pages/RendezVousSecretaire';
 import DossierMedical from './pages/DossierMedical';
 import AllSecretaires from './pages/AllSecretaires';
 import EditSecretaire from './pages/EditSecretaire';
+import Bienvenue from './components/Bienvenue';
+import RendezvousEditPage from './pages/RendezvousEditPage';
 
 const AppLayout: React.FC = () => {
   const location = useLocation();
@@ -53,9 +54,13 @@ const AppLayout: React.FC = () => {
 
         <Route path="/manage-secritaire" element={<ManageSecretaires />} />
         <Route path="/rendezvous-medecin" element={<RendezVousMedecin />} />
-        <Route path="/rendezvous-secritaire" element={<RendezVousSecretaire />} />
 
         <Route path="/edit-secretaire/:id" element={<EditSecretaire />} />
+        
+        <Route path="/dashboard" element={<Bienvenue/>} />
+
+        <Route path="/secretaire/rendezvous/edit/:id" element={<RendezvousEditPage />} />
+
 
       </Routes>
     </div>

@@ -84,7 +84,7 @@ const NewAppointmentForm = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 ms-5">
       <h1 className="mb-4 text-center">Nouveau Rendez-vous</h1>
 
       <form onSubmit={handleSubmit} className="border p-4 rounded-3 shadow-sm">

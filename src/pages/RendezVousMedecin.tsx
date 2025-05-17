@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 type Patient = {
   id: number;
@@ -20,7 +21,6 @@ const DashboardSecretaire: React.FC = () => {
   const [rendezvous, setRendezvous] = useState<Rendezvous[]>([]);
 
   const fetchPatients = async () => {
-    // Fake patient data
     const fakePatients: Patient[] = [
       { id: 1, name: 'Ahmed Benali', date: '2024-05-01', diag: 'Rhume' },
       { id: 2, name: 'Leila Haddad', date: '2024-05-02', diag: 'Fièvre' },
@@ -30,7 +30,6 @@ const DashboardSecretaire: React.FC = () => {
   };
 
   const fetchRendezvous = async () => {
-    // Fake appointment data
     const fakeRendezvous: Rendezvous[] = [
       { id: 1, name: 'Ahmed Benali', date: '2024-05-10', time: '09:00', status: 'en attente' },
       { id: 2, name: 'Leila Haddad', date: '2024-05-10', time: '10:00', status: 'modifié' },
@@ -62,20 +61,36 @@ const DashboardSecretaire: React.FC = () => {
     }
   };
 
+  const confirmyRendezvous = (id: number) => {
+    if (window.confirm('Confirmer ce rendez-vous ?')) {
+      setRendezvous(prev =>
+        prev.map(r =>
+          r.id === id ? { ...r, status: 'confirmé' } : r
+        )
+      );
+    }
+  };
+
   useEffect(() => {
     fetchRendezvous();
   }, []);
 
+  const item = localStorage.getItem('role');
+  const role = item;
+
   return (
     <div className="container mt-4 ms-5">
-      {/* Greeting */}
-      <div className="d-flex justify-content-between align-items-center mb-4">
+     
+
+
+       <div className="flex-grow-1 ms-5 p-4" style={{ marginLeft: '120px' }}>
+        <div className="d-flex justify-content-between align-items-center mb-4">
           <input
             type="text"
             placeholder="Rechercher un patient"
             className="form-control w-50"
           />
-          
+          <a href ='/add-NewAppointmentForm'> <button className="btn btn-primary">+ Nouvel rendi-vous</button></a>
         </div>
 
         <div className="mb-4 d-flex justify-content-around align-items-center">
@@ -86,12 +101,14 @@ const DashboardSecretaire: React.FC = () => {
             <p className="text-muted">Bonne journée au travail !</p>
           </div>
           <div>
-            <img src="/doc1-removebg-preview 1.png" alt="docteur" />
+            <img src="/doc1-removebg-preview 1.png" alt="Doctor" />
           </div>
         </div>
-      
+      </div>
 
-      <section className="mb-5">
+
+
+      <section className="mb-5 ms-5">
         <h4 className="text-secondary mb-3">Rendez-vous</h4>
         <table className="table table-borderless ">
           <thead>
@@ -108,23 +125,51 @@ const DashboardSecretaire: React.FC = () => {
                 <td>{r.name}</td>
                 <td>{r.date}</td>
                 <td>{r.time}</td>
-               
+        
                 <td>
-                  <button style={{backgroundColor:"#37B846"}} className="btn btn-sm btn rounded-5 text-white" onClick={() => modifierRendezvous(r.id)}>Confirmer</button>
-                  <button style={{backgroundColor:"#B83746"}} className="btn btn-sm btn-danger ms-2 rounded-5" onClick={() => deleteRendezvous(r.id)}>Annuler</button>
+                  {role === "medecine" && (
+                    <>
+                      <button
+                        style={{ backgroundColor: "#37B846" }}
+                        className="btn btn-sm btn rounded-5 text-white"
+                        onClick={() => confirmyRendezvous(r.id)}
+                      >
+                        Confirmer
+                      </button>
+                      <button
+                        style={{ backgroundColor: "#B83746" }}
+                        className="btn btn-sm btn-danger ms-2 rounded-5"
+                        onClick={() => deleteRendezvous(r.id)}
+                      >
+                        Annuler
+                      </button>
+                    </>
+                  )}
+                  <button
+                    style={{ backgroundColor: "#B83746" }}
+                    className="btn btn-sm bg-warning  text-white ms-2 rounded-5"
+               
+                  >
+
+                    {/* /secretaire/rendezvous/edit/{r.id} */}
+                 <Link className=' text-white text-decoration-none' to={`/secretaire/rendezvous/edit/${r.id}`}>Modifier</Link>
+
+                  </button>
+                  <button
+                    style={{ backgroundColor: "#B83746" }}
+                    className="btn btn-sm btn-warning text-white ms-2 rounded-5"
+                    onClick={() => deleteRendezvous(r.id)}
+                  >
+                    Annuler
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </section>
-
- 
-     
     </div>
   );
 };
 
 export default DashboardSecretaire;
-
-
