@@ -131,8 +131,10 @@ const DashboardSecretaire: React.FC = () => {
                 <td>{r.time}</td>
         
                 <td>
-                  {role === "medecine" && (
-                    <>
+                  {
+                  
+                  role === "medecine" ?
+                    <div>
                       <button
                         style={{ backgroundColor: "#37B846" }}
                         className="btn btn-sm btn rounded-5 text-white"
@@ -147,16 +149,19 @@ const DashboardSecretaire: React.FC = () => {
                       >
                         Annuler
                       </button>
-                    </>
-                  )}
-                  <button
+                    </div>
+                  :
+
+                  <>
+                  
+                    <button
                     style={{ backgroundColor: "#B83746" }}
                     className="btn btn-sm bg-warning  text-white ms-2 rounded-5"
                
                   >
 
-                    {/* /secretaire/rendezvous/edit/{r.id} */}
-                 <Link className=' text-white text-decoration-none' to={`/secretaire/rendezvous/edit/${r.id}`}>Modifier</Link>
+            
+                    <Link className=' text-white text-decoration-none' to={`/secretaire/rendezvous/edit/${r.id}`}>Modifier</Link>
 
                   </button>
                   <button
@@ -166,7 +171,13 @@ const DashboardSecretaire: React.FC = () => {
                   >
                     Annuler
                   </button>
+                  
+                  </>
+
+
+}
                 </td>
+              
               </tr>
             ))}
           </tbody>
